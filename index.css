@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+#code {
+    display: none;
+}
+.CodeMirror {
+    width: 100%;
+    font-size: 1.5rem;
+    font-family: "Microsoft YaHei";
+    cursor: text;
+}
+.CodeMirror-gutters{
+    cursor: default;
+}
