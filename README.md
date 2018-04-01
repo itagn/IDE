@@ -11,7 +11,7 @@
 1. [python](https://itagn.github.io/IDE/demo/python)
 1. [lua](https://itagn.github.io/IDE/demo/lua)
 1. [markdown](https://itagn.github.io/IDE/demo/markdown)
-1. [html](https://itagn.github.io/IDE/demo/html)
+1. [html](https://itagn.github.io/IDE/demo/htmlMixed)
 1. [php](https://itagn.github.io/IDE/demo/php)
 1. [css](https://itagn.github.io/IDE/demo/css)
 1. [sql](https://itagn.github.io/IDE/demo/sql)
