@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>IDE</title>
+<!-- 初始化 -->
+<link rel="stylesheet" href="../config/codemirror.css">
+<script src="../config/codemirror.js"></script>
+
+<!-- 主题风格 -->
+<link rel="stylesheet" href="../theme/seti.css">
+<link rel="stylesheet" href="../theme/eclipse.css">
+
+<!--支持代码折叠-->
+<link rel="stylesheet" href="../addon/fold/foldgutter.css"/>
+<script src="../addon/fold/foldcode.js"></script>
+<script src="../addon/fold/foldgutter.js"></script>
+<script src="../addon/fold/brace-fold.js"></script>
+<script src="../addon/fold/comment-fold.js"></script>
+
+<!--全屏模式-->
+<link rel="stylesheet" href="../addon/display/fullscreen.css">
+<script src="../addon/display/fullscreen.js"></script>
+
+<!--括号匹配-->
+<script src="../addon/edit/matchbrackets.js"></script>
+
+<!--代码检查错误-->
+<link rel="stylesheet" href="../addon/lint/lint.css">
+<script src="../addon/lint/lint.js"></script>
+<script src="../addon/lint/json-lint.js"></script>
+
+<!--行注释-->
+<script src="../addon/comment/comment.js"></script>
+
+<!--自动补全-->
+<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<script src="../addon/hint/show-hint.js"></script>
+<script src="../addon/hint/anyword-hint.js"></script>
+
+<!-- 自定义文件 -->
+<link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body>
+<textarea class="form-control" id="code" name="code">
+package main
+
+import "fmt"
+
+// Send the sequence 2, 3, 4, ... to channel 'ch'.
+func generate(ch chan&lt;- int) {
+    for i := 2; ; i++ {
+        ch &lt;- i  // Send 'i' to channel 'ch'
+    }
+}
+
+// Copy the values from channel 'src' to channel 'dst',
+// removing those divisible by 'prime'.
+func filter(src &lt;-chan int, dst chan&lt;- int, prime int) {
+    for i := range src {    // Loop over values received from 'src'.
+        if i%prime != 0 {
+            dst &lt;- i  // Send 'i' to channel 'dst'.
+        }
+    }
+}
+
+// The prime sieve: Daisy-chain filter processes together.
+func sieve() {
+    ch := make(chan int)  // Create a new channel.
+    go generate(ch)       // Start generate() as a subprocess.
+    for {
+        prime := &lt;-ch
+        fmt.Print(prime, "\n")
+        ch1 := make(chan int)
+        go filter(ch, ch1, prime)
+        ch = ch1
+    }
+}
+
+func main() {
+    sieve()
+}
+</textarea>
+
+<script src="../mode/go/go.js"></script>
+<script>
+const config = {
+    mode: 'go',
+    theme: 'seti'
+};
+</script>
+<script src="../js/index.js"></script>
+<script src="../js/preventDefault.js"></script>
+</body>
+</html>

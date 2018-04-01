@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>IDE</title>
+<!-- 初始化 -->
+<link rel="stylesheet" href="../config/codemirror.css">
+<script src="../config/codemirror.js"></script>
+
+<!-- 主题风格 -->
+<link rel="stylesheet" href="../theme/seti.css">
+<link rel="stylesheet" href="../theme/eclipse.css">
+
+<!--支持代码折叠-->
+<link rel="stylesheet" href="../addon/fold/foldgutter.css"/>
+<script src="../addon/fold/foldcode.js"></script>
+<script src="../addon/fold/foldgutter.js"></script>
+<script src="../addon/fold/brace-fold.js"></script>
+<script src="../addon/fold/comment-fold.js"></script>
+
+<!--全屏模式-->
+<link rel="stylesheet" href="../addon/display/fullscreen.css">
+<script src="../addon/display/fullscreen.js"></script>
+
+<!--括号匹配-->
+<script src="../addon/edit/matchbrackets.js"></script>
+
+<!--代码检查错误-->
+<link rel="stylesheet" href="../addon/lint/lint.css">
+<script src="../addon/lint/lint.js"></script>
+<script src="../addon/lint/json-lint.js"></script>
+
+<!--行注释-->
+<script src="../addon/comment/comment.js"></script>
+
+<!--自动补全-->
+<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<script src="../addon/hint/show-hint.js"></script>
+<script src="../addon/hint/anyword-hint.js"></script>
+
+<!-- 自定义文件 -->
+<link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body>
+<textarea class="form-control" id="code" name="code">
+    <html>
+        <head>
+          <title>HTML Example</title>
+          <script type="text/javascript">
+            function foo(bar, baz) {
+              alert("quux");
+              return bar + baz + 1;
+            }
+          </script>
+          <style type="text/css">
+            div.border {
+              border: 1px solid black;
+              padding: 3px;
+            }
+            #foo code {
+              font-family: courier, monospace;
+              font-size: 80%;
+              color: #448888;
+            }
+          </style>
+        </head>
+        <body>
+          <p>Duh</p>
+        </body>
+      </html>
+</textarea>
+
+<script src="../mode/xml/xml.js"></script>
+<script src="../mode/javascript/javascript.js"></script>
+<script src="../mode/css/css.js"></script>
+<script src="../mode/htmlmixed/htmlmixed.js"></script>
+<script>
+const config = {
+    mode: 'htmlmixed',
+    theme: 'seti'
+};
+</script>
+<script src="../js/index.js"></script>
+<script src="../js/preventDefault.js"></script>
+</body>
+</html>

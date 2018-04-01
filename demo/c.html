@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>IDE</title>
+<!-- 初始化 -->
+<link rel="stylesheet" href="../config/codemirror.css">
+<script src="../config/codemirror.js"></script>
+
+<!-- 主题风格 -->
+<link rel="stylesheet" href="../theme/seti.css">
+<link rel="stylesheet" href="../theme/eclipse.css">
+
+<!--支持代码折叠-->
+<link rel="stylesheet" href="../addon/fold/foldgutter.css"/>
+<script src="../addon/fold/foldcode.js"></script>
+<script src="../addon/fold/foldgutter.js"></script>
+<script src="../addon/fold/brace-fold.js"></script>
+<script src="../addon/fold/comment-fold.js"></script>
+
+<!--全屏模式-->
+<link rel="stylesheet" href="../addon/display/fullscreen.css">
+<script src="../addon/display/fullscreen.js"></script>
+
+<!--括号匹配-->
+<script src="../addon/edit/matchbrackets.js"></script>
+
+<!--代码检查错误-->
+<link rel="stylesheet" href="../addon/lint/lint.css">
+<script src="../addon/lint/lint.js"></script>
+<script src="../addon/lint/json-lint.js"></script>
+
+<!--行注释-->
+<script src="../addon/comment/comment.js"></script>
+
+<!--自动补全-->
+<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<script src="../addon/hint/show-hint.js"></script>
+<script src="../addon/hint/anyword-hint.js"></script>
+
+<!-- 自定义文件 -->
+<link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body>
+<textarea class="form-control" id="code" name="code">
+/* C demo code */
+
+#include <zmq.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <time.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <malloc.h>
+
+typedef struct {
+  void* arg_socket;
+  zmq_msg_t* arg_msg;
+  char* arg_string;
+  unsigned long arg_len;
+  int arg_int, arg_command;
+
+  int signal_fd;
+  int pad;
+  void* context;
+  sem_t sem;
+} acl_zmq_context;
+
+#define p(X) (context->arg_##X)
+
+void* zmq_thread(void* context_pointer) {
+  acl_zmq_context* context = (acl_zmq_context*)context_pointer;
+  char ok = 'K', err = 'X';
+  int res;
+
+  while (1) {
+    while ((res = sem_wait(&amp;context->sem)) == EINTR);
+    if (res) {write(context->signal_fd, &amp;err, 1); goto cleanup;}
+    switch(p(command)) {
+    case 0: goto cleanup;
+    case 1: p(socket) = zmq_socket(context->context, p(int)); break;
+    case 2: p(int) = zmq_close(p(socket)); break;
+    case 3: p(int) = zmq_bind(p(socket), p(string)); break;
+    case 4: p(int) = zmq_connect(p(socket), p(string)); break;
+    case 5: p(int) = zmq_getsockopt(p(socket), p(int), (void*)p(string), &amp;p(len)); break;
+    case 6: p(int) = zmq_setsockopt(p(socket), p(int), (void*)p(string), p(len)); break;
+    case 7: p(int) = zmq_send(p(socket), p(msg), p(int)); break;
+    case 8: p(int) = zmq_recv(p(socket), p(msg), p(int)); break;
+    case 9: p(int) = zmq_poll(p(socket), p(int), p(len)); break;
+    }
+    p(command) = errno;
+    write(context->signal_fd, &amp;ok, 1);
+  }
+  cleanup:
+  close(context->signal_fd);
+  free(context_pointer);
+  return 0;
+}
+
+void* zmq_thread_init(void* zmq_context, int signal_fd) {
+  acl_zmq_context* context = malloc(sizeof(acl_zmq_context));
+  pthread_t thread;
+
+  context->context = zmq_context;
+  context->signal_fd = signal_fd;
+  sem_init(&amp;context->sem, 1, 0);
+  pthread_create(&amp;thread, 0, &amp;zmq_thread, context);
+  pthread_detach(thread);
+  return context;
+}
+
+/* C++ demo code */
+
+#include <iostream>
+#include "mystuff/util.h"
+
+namespace {
+enum Enum {
+  VAL1, VAL2, VAL3
+};
+
+char32_t unicode_string = U"\U0010FFFF";
+string raw_string = R"delim(anything
+you
+want)delim";
+
+int Helper(const MyType& param) {
+  return 0;
+}
+} // namespace
+
+class ForwardDec;
+
+template <class T, class V>
+class Class : public BaseClass {
+  const MyType<T, V> member_;
+
+  public:
+  const MyType<T, V>& Method() const {
+    return member_;
+  }
+
+  void Method2(MyType<T, V>* value);
+}
+
+template <class T, class V>
+void Class::Method2(MyType<T, V>* value) {
+  std::out << 1 >> method();
+  value->Method3(member_);
+  member_ = value;
+}
+/*
+This is a longer comment
+That spans two lines
+*/
+
+#import <Test/Test.h>
+@implementation YourAppDelegate
+
+// This is a one-line comment
+
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+  char myString[] = "This is a C character array";
+  int test = 5;
+  return YES;
+}
+
+/* C# demo code */
+
+using System;
+
+namespace Example
+{
+    /// <summary>
+    /// Represents a person employed at the company
+    /// </summary>
+    public class Employee : Person
+    {
+        #region Properties
+        
+        /// <summary>
+        /// Gets or sets the first name.
+        /// </summary>
+        /// <value>The first name.</value>
+        public string FirstName { get; set; }
+
+        #endregion
+
+        /// <summary>
+        /// Calculates the salary.
+        /// </summary>
+        /// <param name="grade">The grade.</param>
+        /// <returns></returns>
+        public decimal CalculateSalary(int grade)
+        {
+            if (grade > 10)
+                return 1000;
+            return 500;
+        }
+    }
+}
+</textarea>
+
+<script src="../mode/clike/clike.js"></script>
+<script>
+const config = {
+    mode: 'text/x-java',
+    theme: 'seti'
+};
+</script>
+<script src="../js/index.js"></script>
+<script src="../js/preventDefault.js"></script>
+</body>
+</html>

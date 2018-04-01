@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>IDE</title>
+<!-- 初始化 -->
+<link rel="stylesheet" href="../config/codemirror.css">
+<script src="../config/codemirror.js"></script>
+
+<!-- 主题风格 -->
+<link rel="stylesheet" href="../theme/seti.css">
+<link rel="stylesheet" href="../theme/eclipse.css">
+
+<!--支持代码折叠-->
+<link rel="stylesheet" href="../addon/fold/foldgutter.css"/>
+<script src="../addon/fold/foldcode.js"></script>
+<script src="../addon/fold/foldgutter.js"></script>
+<script src="../addon/fold/brace-fold.js"></script>
+<script src="../addon/fold/comment-fold.js"></script>
+
+<!--全屏模式-->
+<link rel="stylesheet" href="../addon/display/fullscreen.css">
+<script src="../addon/display/fullscreen.js"></script>
+
+<!--括号匹配-->
+<script src="../addon/edit/matchbrackets.js"></script>
+
+<!--代码检查错误-->
+<link rel="stylesheet" href="../addon/lint/lint.css">
+<script src="../addon/lint/lint.js"></script>
+<script src="../addon/lint/json-lint.js"></script>
+
+<!--行注释-->
+<script src="../addon/comment/comment.js"></script>
+
+<!--自动补全-->
+<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<script src="../addon/hint/show-hint.js"></script>
+<script src="../addon/hint/anyword-hint.js"></script>
+
+<!-- 自定义文件 -->
+<link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body>
+<textarea class="form-control" id="code" name="code">
+import os
+from package import ParentClass
+
+@nonsenseDecorator
+def doesNothing():
+    pass
+
+class ExampleClass(ParentClass):
+    @staticmethod
+    def example(inputStr):
+        a = list(inputStr)
+        a.reverse()
+        return ''.join(a)
+
+    def __init__(self, mixin = 'Hello'):
+        self.mixin = mixin
+</textarea>
+
+<script src="../mode/python/python.js"></script>
+<script>
+const config = {
+    mode: 'python',
+    theme: 'seti'
+};
+</script>
+<script src="../js/index.js"></script>
+<script src="../js/preventDefault.js"></script>
+</body>
+</html>

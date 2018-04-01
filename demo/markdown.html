@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>IDE</title>
+<!-- 初始化 -->
+<link rel="stylesheet" href="../config/codemirror.css">
+<script src="../config/codemirror.js"></script>
+
+<!-- 主题风格 -->
+<link rel="stylesheet" href="../theme/seti.css">
+<link rel="stylesheet" href="../theme/eclipse.css">
+
+<!--支持代码折叠-->
+<link rel="stylesheet" href="../addon/fold/foldgutter.css"/>
+<script src="../addon/fold/foldcode.js"></script>
+<script src="../addon/fold/foldgutter.js"></script>
+<script src="../addon/fold/brace-fold.js"></script>
+<script src="../addon/fold/comment-fold.js"></script>
+
+<!--全屏模式-->
+<link rel="stylesheet" href="../addon/display/fullscreen.css">
+<script src="../addon/display/fullscreen.js"></script>
+
+<!--括号匹配-->
+<script src="../addon/edit/matchbrackets.js"></script>
+
+<!--代码检查错误-->
+<link rel="stylesheet" href="../addon/lint/lint.css">
+<script src="../addon/lint/lint.js"></script>
+<script src="../addon/lint/json-lint.js"></script>
+
+<!--行注释-->
+<script src="../addon/comment/comment.js"></script>
+
+<!--自动补全-->
+<link rel="stylesheet" href="../addon/hint/show-hint.css">
+<script src="../addon/hint/show-hint.js"></script>
+<script src="../addon/hint/anyword-hint.js"></script>
+
+<!-- 自定义文件 -->
+<link rel="stylesheet" type="text/css" href="../index.css" />
+</head>
+<body>
+<textarea class="form-control" id="code" name="code">
+# 观察者模式
+## 通过Proxy和Reflect创建观察者模式
+```javascript
+const obList = {
+    set,
+    get
+};
+//  初始化观察者方法
+const ob = obj => new Proxy(obj, obList);
+//  监听的方法
+const times = {
+    set: 0,
+    get: 0
+};
+function set(target, key, value, receiver){
+    const result = Reflect.set(target, key, value, receiver);
+    obFn('set', ++times.set);
+    return result;
+}
+function get(target, key, value, receiver){
+    const result = Reflect.get(target, key, value, receiver);
+    obFn('get', ++times.get);
+    return result;
+}
+function obFn(str, num){
+    console.log(str, '次数', num);
+}
+```
+
+作者：微博 [@itagn][1] - Github [@itagn][2]
+
+[1]: https://weibo.com/p/1005053782707172
+[2]: https://github.com/itagn
+</textarea>
+
+<script src="../mode/xml/xml.js"></script>
+<script src="../mode/markdown/markdown.js"></script>
+<script>
+const config = {
+    mode: 'markdown',
+    theme: 'seti'
+};
+</script>
+<script src="../js/index.js"></script>
+<script src="../js/preventDefault.js"></script>
+</body>
+</html>
