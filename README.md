@@ -1,7 +1,7 @@
 # IDE
 
 ## 介绍  
-:penguin: 基于CodeMirror库设计的web IDE  
+:penguin: 基于CodeMirror库设计的 Web IDE  
 ## DEMO  
 
 1. [c, c++, c#](https://itagn.github.io/IDE/demo/c)

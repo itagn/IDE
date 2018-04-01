@@ -10,6 +10,8 @@ let editor = CodeMirror.fromTextArea(code, {
     theme: config.theme || 'seti',
     // 缩进单位，默认2
     indentUnit: 4,
+	// 隐藏滚动条
+    scrollbarStyle: 'null',
     // 自动获取焦点
     autofocus: true,
     //代码折叠
