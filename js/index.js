@@ -32,6 +32,8 @@ let editor = CodeMirror.fromTextArea(code, {
     // 自动闭合标签
     autoCloseTags: true,
     autoCloseBrackets: true,
+    // 在选择时显示光标
+    showCursorWhenSelecting:true,
     // 快捷键
     extraKeys:{
         "Ctrl-Enter": "autocomplete", //ctrl-enter唤起智能提示
