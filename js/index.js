@@ -34,7 +34,7 @@ let editor = CodeMirror.fromTextArea(code, {
     autoCloseBrackets: true,
     // 快捷键
     extraKeys:{
-        // "Ctrl-Enter": "autocomplete", //ctrl-enter唤起智能提示
+        "Ctrl-Enter": "autocomplete", //ctrl-enter唤起智能提示
         "Ctrl-/": "toggleComment",
         "Ctrl-S": function (){
             let code = editor.getValue();
